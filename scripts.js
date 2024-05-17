@@ -1,23 +1,24 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from './data.js';
 
-class BookConnect extends HTTMLElement {
+// Created a custom web component
+class BookConnect extends HTTMLElement { //web component created
+    // Initialises HTMLElement 
     constructor() {
         super();
+        // Encapsulates styles and markup and allows DOM to be accessible through JavaScript
         this.attachShadow({mode: 'open'});
         this.page = 1;
         this.matches = books;
         this.shadowRoot.innerHTML =``
     }
 }
-// Initializes the page numbers and titles for the books and authors
-let page = 1;
-let matches = books;
 
 /**
  * 
  * @param {*} book 
  * @returns 
  */
+
 // Iterates through matches and creates preview elements for first page
    function createPreviewButton(book) {
  const { id, image, title, author } = book;
