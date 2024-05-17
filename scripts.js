@@ -207,9 +207,12 @@ this.shadowRoot.querySelector('[data-list-items]').addEventListener('click', eve
     }
 });
 }
-
-renderBooks(matches);
-updateShowMoreButton();
+connectedCallback() {
+    this.renderBooks(this.matches);
+    this.updateShowMoreButton();
+    this.authorsOption();
+    this.createGenreOption();
+ }
 }
 // Registers the custom element
 customElements.define('book-connect', BookConnect);
