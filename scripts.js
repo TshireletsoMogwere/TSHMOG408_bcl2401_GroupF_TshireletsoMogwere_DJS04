@@ -215,6 +215,7 @@ class BookConnect extends HTMLElement { //web component created
           .preview {
             border-width: 0;
             width: 100%;
+            margin: 10px;
             font-family: Roboto, sans-serif;
             padding: 0.5rem 1rem;
             display: flex;
