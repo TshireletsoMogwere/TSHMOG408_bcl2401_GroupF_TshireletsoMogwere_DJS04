@@ -9,7 +9,12 @@ class BookConnect extends HTTMLElement { //web component created
         this.attachShadow({mode: 'open'});
         this.page = 1;
         this.matches = books;
-        this.shadowRoot.innerHTML =``
+        this.shadowRoot.innerHTML =``;
+        // Calls methods
+        this.renderBooks(this.matches);
+        this.updateShowMoreButton();
+        this.attachEventListeners();
+
     }
 
 
@@ -50,14 +55,14 @@ renderBooks(bookList) {
     });
 
 // // Appends initial previews to the document
-document.querySelector('[data-list-items]').innerHTML = '';
-document.querySelector('[data-list-items]').appendChild(fragment);
+this.shadowRoot.querySelector('[data-list-items]').innerHTML = '';
+this.shadowRoot.querySelector('[data-list-items]').appendChild(fragment);
 
 }
 
 updateShowMoreButton() {
     const remaining = Math.max(matches.length - (page * BOOKS_PER_PAGE), 0);
-    const button = document.querySelector('[data-list-button]');
+    const button = this.shadowRoot.querySelector('[data-list-button]');
     button.innerText = `Show more (${remaining})`;
     button.disabled = remaining <= 0;
 }
@@ -71,18 +76,18 @@ authorsOption() {
     for (const [id, name] of Object.entries(authors)) {
         authorsHtml.appendChild(createOptionElement(id, name));
     }
-    document.querySelector('[data-search-authors]').appendChild(authorsHtml);
+    this.shadowRoot.querySelector('[data-search-authors]').appendChild(authorsHtml);
 }
 
 createGenreOption() {
     const genreHtml = document.createDocumentFragment()
-    const firstGenreElement = createOptionElement('any', "All Genres");
+    const firstGenreElement = this.createOptionElement('any', "All Genres");
     genreHtml.appendChild(firstGenreElement);
 
     for (const [id, name] of Object.entries(genres)) {
         genreHtml.appendChild(createOptionElement(id, name));
 }
-document.querySelector('[data-search-genres]').appendChild(genreHtml);
+this.shadowRoot.querySelector('[data-search-genres]').appendChild(genreHtml);
 }
 
 /**
@@ -116,25 +121,25 @@ handleBookSearch(filters) {
 
 
 // resets to first page
-page = 1;
-matches = result;
-renderBooks(matches);
-updateShowMoreButton();
+this.page = 1;
+this.matches = result;
+this.renderBooks(this.matches);
+this.updateShowMoreButton();
 }
 
-// Add event listener
+attachEventListeners() {
 // Adds event listener to show setting overlay when search icon is clicked
-querySelector('[data-header-search]').addEventListener('click', () => {
-    document.querySelector('[data-search-overlay]').open = true 
-    document.querySelector('[data-search-title]').focus()
+this.shadowRoot.querySelector('[data-header-search]').addEventListener('click', () => {
+    this.shadowRoot.querySelector('[data-search-overlay]').open = true 
+    this.shadowRoot.querySelector('[data-search-title]').focus()
 })
 
-document.querySelector('[data-search-form]').addEventListener('submit', event => {
+this.shadowRoot.querySelector('[data-search-form]').addEventListener('submit', event => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const filters = Object.fromEntries(formData);
     handleBookSearch(filters);
-    document.querySelector('[data-search-overlay]').open = false;
+    this.shadowRoot.querySelector('[data-search-overlay]').open = false;
 });
 
 // Adds event listeners to hide search overlay when cancel button is clicked
@@ -143,12 +148,12 @@ document.querySelector('[data-search-cancel]').addEventListener('click', () => {
 })
 
 // Adding event listener to show settings overlay when settings icon is clicked.
-document.querySelector('[data-header-settings]').addEventListener('click', () => {
-    document.querySelector('[data-settings-overlay]').open = true 
+this.shadowRoot.querySelector('[data-header-settings]').addEventListener('click', () => {
+    this.shadowRoot.querySelector('[data-settings-overlay]').open = true 
 })
 
 // Event listener to handle theme change submission
-document.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
+this.shadowRoot.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const { theme } = Object.fromEntries(formData.entries());
@@ -162,45 +167,46 @@ document.querySelector('[data-settings-form]').addEventListener('submit', (event
     }
     
     // Close settings overlay after theme change
-    document.querySelector('[data-settings-overlay]').open = false;
+    this.shadowRoot.querySelector('[data-settings-overlay]').open = false;
 });
 
 // Set cancel button to false for setting icon
-document.querySelector('[data-settings-cancel]').addEventListener('click', () => {
-    document.querySelector('[data-settings-overlay]').open = false
+this.shadowRoot.querySelector('[data-settings-cancel]').addEventListener('click', () => {
+    this.shadowRoot.querySelector('[data-settings-overlay]').open = false
 })
 
 
-document.querySelector('[data-list-button]').addEventListener('click', () => {
+this.shadowRoot.querySelector('[data-list-button]').addEventListener('click', () => {
     const fragment = document.createDocumentFragment();
-    matches.slice(page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE).forEach(book => {
-        const element = createPreviewButton(book);
+    mthis.atches.slice(page * BOOKS_PER_PAGE, (this.page + 1) * BOOKS_PER_PAGE).forEach(book => {
+        const element = this.createPreviewButton(book);
         fragment.appendChild(element);
     });
-    document.querySelector('[data-list-items]').appendChild(fragment);
-    page += 1;
-    updateShowMoreButton()
+    this.shadowRoot.querySelector('[data-list-items]').appendChild(fragment);
+    this.page += 1;
+    this.updateShowMoreButton()
 });
 
 // // Adding event listener to hide book details overlay when close button is clicked.
-document.querySelector('[data-list-close]').addEventListener('click', () => {
-    document.querySelector('[data-list-active]').open = false
+this.shadowRoot.querySelector('[data-list-close]').addEventListener('click', () => {
+    this.shadowRoot.querySelector('[data-list-active]').open = false
 })
 
 
-document.querySelector('[data-list-items]').addEventListener('click', event => {
+this.shadowRoot.querySelector('[data-list-items]').addEventListener('click', event => {
     const previewButton = event.target.closest('[data-preview]');
     if (!previewButton) return;
     const activeBook = matches.find(book => book.id === previewButton.dataset.preview);
     if(activeBook) {
-        document.querySelector('[data-list-active]').open = true
-        document.querySelector('[data-list-blur]').src = activeBook.image
-        document.querySelector('[data-list-image]').src = activeBook.image
-        document.querySelector('[data-list-title]').innerText = activeBook.title
-        document.querySelector('[data-list-subtitle]').innerText = `${authors[activeBook.author]} (${new Date(activeBook.published).getFullYear()})`
-        document.querySelector('[data-list-description]').innerText = activeBook.description
+        this.shadowRoot.querySelector('[data-list-active]').open = true
+        this.shadowRoot.querySelector('[data-list-blur]').src = activeBook.image
+        this.shadowRoot.querySelector('[data-list-image]').src = activeBook.image
+        this.shadowRoot.querySelector('[data-list-title]').innerText = activeBook.title
+        this.shadowRoot.querySelector('[data-list-subtitle]').innerText = `${authors[activeBook.author]} (${new Date(activeBook.published).getFullYear()})`
+        this.shadowRoot.querySelector('[data-list-description]').innerText = activeBook.description
     }
 });
+}
 
 renderBooks(matches);
 updateShowMoreButton();
