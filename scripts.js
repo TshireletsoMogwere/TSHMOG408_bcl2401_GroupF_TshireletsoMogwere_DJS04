@@ -205,7 +205,8 @@ document.querySelector('[data-list-items]').addEventListener('click', event => {
 renderBooks(matches);
 updateShowMoreButton();
 
-
+// Registers the custom element
+customElements.define('book-connect', BookConnect);
 
 
 
