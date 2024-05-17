@@ -1,5 +1,14 @@
 import { books, authors, genres, BOOKS_PER_PAGE } from './data.js';
 
+class BookConnect extends HTTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({mode: 'open'});
+        this.page = 1;
+        this.matches = books;
+        this.shadowRoot.innerHTML =``
+    }
+}
 // Initializes the page numbers and titles for the books and authors
 let page = 1;
 let matches = books;
@@ -194,6 +203,7 @@ document.querySelector('[data-list-items]').addEventListener('click', event => {
 
 renderBooks(matches);
 updateShowMoreButton();
+
 
 
 
