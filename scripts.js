@@ -11,7 +11,7 @@ class BookConnect extends HTTMLElement { //web component created
         this.matches = books;
         this.shadowRoot.innerHTML =``
     }
-}
+
 
 /**
  * 
@@ -20,7 +20,7 @@ class BookConnect extends HTTMLElement { //web component created
  */
 
 // Iterates through matches and creates preview elements for first page
-   function createPreviewButton(book) {
+   createPreviewButton(book) {
  const { id, image, title, author } = book;
     const element = document.createElement('button');
     element.classList = 'preview';
@@ -40,7 +40,7 @@ class BookConnect extends HTTMLElement { //web component created
  * @param {*} bookList 
  */
 
-function renderBooks(bookList) {
+renderBooks(bookList) {
     const fragment = document.createDocumentFragment();
     bookList.slice(0, BOOKS_PER_PAGE).forEach(book => {
         const element = createPreviewButton(book);
@@ -55,7 +55,7 @@ document.querySelector('[data-list-items]').appendChild(fragment);
 
 }
 
-function updateShowMoreButton() {
+updateShowMoreButton() {
     const remaining = Math.max(matches.length - (page * BOOKS_PER_PAGE), 0);
     const button = document.querySelector('[data-list-button]');
     button.innerText = `Show more (${remaining})`;
@@ -63,7 +63,7 @@ function updateShowMoreButton() {
 }
 
 
-function authorsOption() {
+authorsOption() {
     const authorsHtml = document.createDocumentFragment()
     const firstAuthorElement = createOptionElement('any', "All Authors");
     authorsHtml.appendChild(firstAuthorElement);
@@ -74,7 +74,7 @@ function authorsOption() {
     document.querySelector('[data-search-authors]').appendChild(authorsHtml);
 }
 
-function createGenreOption() {
+createGenreOption() {
     const genreHtml = document.createDocumentFragment()
     const firstGenreElement = createOptionElement('any', "All Genres");
     genreHtml.appendChild(firstGenreElement);
@@ -92,7 +92,7 @@ document.querySelector('[data-search-genres]').appendChild(genreHtml);
  * @returns 
  */
 
-function createOptionElement(value, name) {
+ createOptionElement(value, name) {
     const element = document.createElement('option');
     element.value = value;
     element.innerText = name;
@@ -104,7 +104,7 @@ function createOptionElement(value, name) {
  * @param {*} filters 
  */
 
-function handleBookSearch(filters) {
+handleBookSearch(filters) {
     const result = books.filter(book => {
         const genreMatch = filters.genre === 'any' || book.genres.includes(filters.genre);
         return (
@@ -124,7 +124,7 @@ updateShowMoreButton();
 
 // Add event listener
 // Adds event listener to show setting overlay when search icon is clicked
-document.querySelector('[data-header-search]').addEventListener('click', () => {
+querySelector('[data-header-search]').addEventListener('click', () => {
     document.querySelector('[data-search-overlay]').open = true 
     document.querySelector('[data-search-title]').focus()
 })
@@ -204,7 +204,7 @@ document.querySelector('[data-list-items]').addEventListener('click', event => {
 
 renderBooks(matches);
 updateShowMoreButton();
-
+}
 // Registers the custom element
 customElements.define('book-connect', BookConnect);
 
