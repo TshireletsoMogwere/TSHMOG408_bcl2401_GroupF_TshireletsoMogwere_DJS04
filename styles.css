@@ -119,7 +119,7 @@ option {
 /* grid */
 
 .list {
-  padding-bottom: 10rem;
+  padding-bottom: 0rem;
 }
 
 .list__message {
