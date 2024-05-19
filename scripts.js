@@ -14,18 +14,41 @@ class BookConnect extends HTMLElement { //web component created
         
           
         </style>
+
+        <form data-search-form>
+        <input type="text" name="title" data-search-title placeholder="Search by title">
+        <select name="genre" data-search-genres></select>
+        <select name="author" data-search-authors></select>
+        <button type="submit">Search</button>
+        <button type="button" data-search-cancel>Cancel</button>
+    </form>
+</div>
+<div>
+    <form data-settings-form>
+        <select name="theme" data-settings-theme>
+            <option value="day">Day</option>
+            <option value="night">Night</option>
+        </select>
+        <button type="submit">Apply</button>
+        <button type="button" data-settings-cancel>Cancel</button>
+    </form>
+</div>
+<div>
+    <div data-list-message class="list__message">No results found</div>
+    <div data-list-items></div>
+    <button data-list-button style="font-family: Roboto, sans-serif; transition: background-color 0.1s; border-width: 0; border-radius: 6px; height: 2.75rem; cursor: pointer; width: 50%; background-color: rgba(var(--color-blue), 1); color: rgba(var(--color-force-light), 1); font-size: 1rem; border: 1px solid rgba(var(--color-blue), 1); max-width: 10rem; margin: 0 auto; display: block;">
+Show more
+</button>
+
         <div>
-        <div data-search-overlay></div>
-         <div data-settings-overlay></div>
-        <div><div data-list-items></div>
-        <div data-list-active>
+        <dialog data-list-active>
             <img data-list-blur>
             <img data-list-image>
             <h3 data-list-title></h3>
-            <p data-list-subtitle></p>
+            <div data-list-subtitle></div>
             <p data-list-description></p>
-            
-        </div>
+            <button data-list-close>Close</button>
+        </dialog>
     </div>`;
 
         // Calls methods
