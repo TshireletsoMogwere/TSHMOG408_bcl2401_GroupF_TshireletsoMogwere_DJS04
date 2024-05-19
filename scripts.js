@@ -606,11 +606,11 @@ this.updateShowMoreButton();
 }
 
 attachEventListeners() {
-// Adds event listener to show setting overlay when search icon is clicked
-this.shadowRoot.querySelector('[data-header-search]').addEventListener('click', () => {
-    this.shadowRoot.querySelector('[data-search-overlay]').open = true 
-    this.shadowRoot.querySelector('[data-search-title]').focus()
-})
+// // Adds event listener to show setting overlay when search icon is clicked
+// this.shadowRoot.querySelector('[data-header-search]').addEventListener('click', () => {
+//     this.shadowRoot.querySelector('[data-search-overlay]').open = true 
+//     this.shadowRoot.querySelector('[data-search-title]').focus()
+// })
 
 this.shadowRoot.querySelector('[data-search-form]').addEventListener('submit', event => {
     event.preventDefault();
@@ -620,15 +620,15 @@ this.shadowRoot.querySelector('[data-search-form]').addEventListener('submit', e
     this.shadowRoot.querySelector('[data-search-overlay]').open = false;
 });
 
-// Adds event listeners to hide search overlay when cancel button is clicked
-this.shadowRoot.querySelector('[data-search-cancel]').addEventListener('click', () => {
-    this.shadowRoot.querySelector('[data-search-overlay]').open = false
-})
+// // Adds event listeners to hide search overlay when cancel button is clicked
+// this.shadowRoot.querySelector('[data-search-cancel]').addEventListener('click', () => {
+//     this.shadowRoot.querySelector('[data-search-overlay]').open = false
+// })
 
-// Adding event listener to show settings overlay when settings icon is clicked.
-this.shadowRoot.querySelector('[data-header-settings]').addEventListener('click', () => {
-    this.shadowRoot.querySelector('[data-settings-overlay]').open = true 
-})
+// // Adding event listener to show settings overlay when settings icon is clicked.
+// this.shadowRoot.querySelector('[data-header-settings]').addEventListener('click', () => {
+//     this.shadowRoot.querySelector('[data-settings-overlay]').open = true 
+// })
 
 // Event listener to handle theme change submission
 this.shadowRoot.querySelector('[data-settings-form]').addEventListener('submit', (event) => {
@@ -644,14 +644,14 @@ this.shadowRoot.querySelector('[data-settings-form]').addEventListener('submit',
         document.documentElement.style.setProperty('--color-light', '255, 255, 255');
     }
     
-    // Close settings overlay after theme change
-    this.shadowRoot.querySelector('[data-settings-overlay]').open = false;
+    // // Close settings overlay after theme change
+    // this.shadowRoot.querySelector('[data-settings-overlay]').open = false;
 });
 
 // Set cancel button to false for setting icon
-this.shadowRoot.querySelector('[data-settings-cancel]').addEventListener('click', () => {
-    this.shadowRoot.querySelector('[data-settings-overlay]').open = false
-})
+// this.shadowRoot.querySelector('[data-settings-cancel]').addEventListener('click', () => {
+//     this.shadowRoot.querySelector('[data-settings-overlay]').open = false
+// })
 
 
 this.shadowRoot.querySelector('[data-list-button]').addEventListener('click', () => {
